@@ -7,5 +7,8 @@
 </head>
 <body>
     <h1>Epic Task</h1>
+    <ul>
+        <li th:each="task: ${tasks}" th:text="${task.title}"></li>
+    </ul>
 </body>
 </html>
