@@ -10,6 +10,11 @@
 </head>
 <body>
     <h1 class="text-primary text-2xl font-bold p-4">Epic Task</h1>
+    <a href="/task/form" class="btn btn-primary">Nova tarefa</a>
+
+    <div th:if="${message}" role="alert" class="alert alert-success alert-soft m-4">
+        <span th:text="${message}"></span>
+    </div>
 
     <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 place-items-center">
         <div th:each="task : ${tasks}" class="card w-96 bg-base-300 card-md shadow-sm">
