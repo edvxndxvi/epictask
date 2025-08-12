@@ -9,9 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h1>Epic Task</h1>
-    <ul>
-        <li th:each="task: ${tasks}" th:text="${task.title}"></li>
-    </ul>
+    <h1 class="text-primary text-2xl font-bold p-4">Epic Task</h1>
+
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 place-items-center">
+        <div th:each="task : ${tasks}" class="card w-96 bg-base-300 card-md shadow-sm">
+            <div class="badge badge-accent m-4" th:text="${task.score + ' pts'}"></div>
+            <div class="card-body items-center">
+                <h2 class="card-title" th:text="${task.title}"></h2>
+                <p th:text="${task.description}"></p>
+                <div class="radial-progress text-primary" th:style="${'--value:' + task.status}" th:aria-valuenow="70" role="progressbar" th:text="${task.status + '%'}"></div>
+            </div>
+            <div class="card-actions justify-end m-4">
+                <button class="btn btn-primary">Apagar</button>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
