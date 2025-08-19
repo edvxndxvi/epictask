@@ -1,6 +1,8 @@
 package br.com.fiap.epictask.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +19,10 @@ import jakarta.validation.Valid;
 public class TaskController {
 
     private final TaskService taskService;
-    public TaskController(@Autowired TaskService taskService) {
+    private final MessageSource messageSource;
+    public TaskController(@Autowired TaskService taskService, MessageSource messageSource) {
         this.taskService = taskService;
+        this.messageSource = messageSource;
     }
 
     @GetMapping
@@ -29,7 +33,7 @@ public class TaskController {
     }
 
     @GetMapping("/form")
-    public String form() {
+    public String form(Task task) {
         return "form";
     }
 
@@ -37,7 +41,8 @@ public class TaskController {
     public String save(@Valid Task task, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) return "form";
         taskService.save(task);
-        redirect.addFlashAttribute("message", "Tarefa cadastrada com sucesso!");
+        var message = messageSource.getMessage("task.create.succes", null, LocaleContextHolder.getLocale());
+        redirect.addFlashAttribute("message", message);
         return "redirect:/task";
     }
 }
