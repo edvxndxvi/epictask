@@ -33,7 +33,7 @@
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                     <div class="w-10 rounded-full">
                         <img alt="Tailwind CSS Navbar component"
-                            th:src="${user.attributes.picture}" />
+                            th:src="${user.attributes.avatar_url}" />
                     </div>
                 </div>
                 <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
@@ -61,7 +61,10 @@
                     role="progressbar" th:text="${task.status + '%'}"></div>
             </div>
             <div class="card-actions justify-end m-4">
-                <button class="btn btn-primary" th:text="#{task.edit}"></button>
+                <form th:action="${'/task/' + task.id}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-primary" th:text="#{delete}"></button>
+                </form>
             </div>
         </div>
     </main>

@@ -8,7 +8,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -45,6 +47,14 @@ public class TaskController {
         if (result.hasErrors()) return "form";
         taskService.save(task);
         var message = messageSource.getMessage("task.create.succes", null, LocaleContextHolder.getLocale());
+        redirect.addFlashAttribute("message", message);
+        return "redirect:/task";
+    }
+
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable  Long id, RedirectAttributes redirect) {
+        taskService.delete(id);
+        var message = messageSource.getMessage("task.delete.success", null, LocaleContextHolder.getLocale());
         redirect.addFlashAttribute("message", message);
         return "redirect:/task";
     }
